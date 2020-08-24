@@ -11,15 +11,15 @@ RUN wget https://repo.continuum.io/archive/Anaconda3-2020.07-Linux-x86_64.sh && 
 ENV PATH /opt/anaconda3/bin:$PATH
 
 RUN pip install --upgrade pip && \
-    #下記をしないとpythonをダウングレードできないため。
+    #The following is necessary for downgrading python.
     conda install anaconda && conda update --all && \
-    #最新のpythonではtensorflowが対応していないためダウングレード
+    #Downgrade to tensorflow-enabled python.
     conda install python=3.6.6 && \
     pip install tensorflow==2.3.0 && \
     pip install keras==2.4.3 && \
-    #anacondaで実行できないバグ対応:tornadoをダウングレード
+    #Bug fixes for ipynb execution.
     conda install tornado=4.5.3 -y &&\
-    #下記追加で使うパッケージ
+    #Additional packages to use.
     pip install plotly
 
 WORKDIR /
