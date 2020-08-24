@@ -1,0 +1,24 @@
+FROM ubuntu:latest
+RUN apt-get update && apt-get install -y \
+	sudo \
+	wget \
+	vim
+WORKDIR /opt
+RUN wget https://repo.continuum.io/archive/Anaconda3-2020.07-Linux-x86_64.sh && \
+	sh Anaconda3-2020.07-Linux-x86_64.sh -b -p /opt/anaconda3 && \
+	rm -f Anaconda3-2020.07-Linux-x86_64.sh
+
+ENV PATH /opt/anaconda3/bin:$PATH
+
+RUN pip install --upgrade pip && \
+    conda install anaconda && conda update --all && \
+    conda install python=3.6.6 && \
+    pip install tensorflow==2.3.0 && \
+    pip install keras==2.4.3 && \
+    conda install tornado=4.5.3 -y &&\
+    pip install plotly
+
+WORKDIR /
+CMD ["jupyter","lab","--ip=0.0.0.0","--allow-root","--LabApp.token=''"]
+
+
