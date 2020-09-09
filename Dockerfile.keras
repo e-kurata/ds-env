@@ -6,7 +6,8 @@ RUN apt-get update && apt-get install -y \
     libsm6 \
     libxext6 \
     libxrender-dev \
-    libglib2.0-0
+    libglib2.0-0 \
+    libgl1-mesa-glx
 
 #get and install anaconda
 WORKDIR /opt
@@ -20,10 +21,12 @@ ENV PATH /opt/anaconda3/bin:$PATH
 RUN pip install --upgrade pip && \
     pip install tensorflow==2.3.0 && \
     pip install keras==2.4.3 && \
-    pip install plotly \
+    pip install plotly && \
 #Following is to use OpenCV
     pip install opencv-python && \
-    pip install nibabel
+    pip install nibabel && \
+    pip install xgboost && \
+    pip install lightgbm 
 
 WORKDIR /
 CMD ["jupyter","lab","--ip=0.0.0.0","--allow-root","--LabApp.token=''"]
